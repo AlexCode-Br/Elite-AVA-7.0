@@ -115,20 +115,14 @@ export const ModalsUI = {
             modal.classList.remove('hidden');
             
             // SENIOR FIX: Cache Busting
-            // Adiciona ?v=timestamp para obrigar o navegador a buscar o arquivo novo
-            // e impedir que ele entregue a versão cacheada (que é o index.html)
             const timestamp = new Date().getTime();
             
-            // Só carrega se estiver vazio ou com erro
-            // Nota: Adicionei a verificação do pathname para garantir
             const currentSrc = iframe.getAttribute('src');
             if (!currentSrc || currentSrc === 'about:blank' || currentSrc.includes('index.html')) {
                 iframe.src = `edital.pdf?v=${timestamp}`;
             }
         } else {
             modal.classList.add('hidden');
-            // Opcional: Limpar o src ao fechar para economizar memória
-            // iframe.src = 'about:blank'; 
         }
     }
 };

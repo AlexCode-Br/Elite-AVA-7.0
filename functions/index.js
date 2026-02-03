@@ -17,11 +17,14 @@ exports.updateUserProgress = onCall(async (request) => {
     }
 
     const uid = request.auth.uid;
-    const { toggleItemId, isPerfectDay } = request.data;
+    // CORREÇÃO: Validação de dados de entrada
+    const data = request.data || {};
+    const { toggleItemId, isPerfectDay } = data;
     
-    // IMPORTANTE: Ajuste o App ID se necessário. 
-    // No seu código anterior era 'default-app-id' ou vinha de window.__app_id
-    // Aqui vamos usar um padrão para garantir que funcione.
+    if (!toggleItemId) {
+         throw new Error("Item ID é obrigatório.");
+    }
+    
     const appId = "default-app-id"; 
 
     const userRef = admin.firestore()

@@ -1,5 +1,28 @@
 import { LearningInsights } from '../insights/learning.insights.js';
 
+// Funções auxiliares (Helpers) que estavam faltando
+function getColorClass(type) {
+    const map = {
+        'urgent': 'border-red-500 bg-red-50 text-red-700',
+        'success': 'border-green-500 bg-green-50 text-green-700',
+        'warning': 'border-yellow-500 bg-yellow-50 text-yellow-700',
+        'celebration': 'border-purple-500 bg-purple-50 text-purple-700',
+        'action': 'border-blue-500 bg-blue-50 text-blue-700'
+    };
+    return map[type] || 'border-slate-200';
+}
+
+function getTextColorClass(type) {
+     const map = {
+        'urgent': 'text-red-800',
+        'success': 'text-green-800',
+        'warning': 'text-yellow-800',
+        'celebration': 'text-purple-800',
+        'action': 'text-blue-800'
+    };
+    return map[type] || 'text-slate-800';
+}
+
 export const RecommendationsUI = {
     
     render: (scheduleData) => {
@@ -33,37 +56,12 @@ export const RecommendationsUI = {
                 <div class="text-xl shrink-0">${insight.icon}</div>
                 <div>
                     <h4 class="font-bold text-sm ${getTextColorClass(insight.type)}">${insight.title}</h4>
-                    <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">${insight.message}</p>
+                    <p class="text-xs text-opacity-80 leading-snug mt-0.5">${insight.message}</p>
                 </div>
-            </div>
-            `;
+            </div>`;
         }).join('');
 
         container.innerHTML = html;
         container.classList.remove('hidden');
-        
-        // Esconde o loader se estiver visível
-        const loading = document.getElementById('daily-briefing-loading');
-        if(loading) loading.classList.add('hidden');
     }
 };
-
-function getColorClass(type) {
-    switch(type) {
-        case 'urgent': return 'border-red-500 bg-red-50 dark:bg-red-900/20';
-        case 'warning': return 'border-orange-500 bg-orange-50 dark:bg-orange-900/20';
-        case 'success': return 'border-green-500 bg-green-50 dark:bg-green-900/20';
-        case 'celebration': return 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20';
-        default: return 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
-    }
-}
-
-function getTextColorClass(type) {
-    switch(type) {
-        case 'urgent': return 'text-red-700 dark:text-red-400';
-        case 'warning': return 'text-orange-700 dark:text-orange-400';
-        case 'success': return 'text-green-700 dark:text-green-400';
-        case 'celebration': return 'text-yellow-700 dark:text-yellow-400';
-        default: return 'text-blue-700 dark:text-blue-400';
-    }
-}

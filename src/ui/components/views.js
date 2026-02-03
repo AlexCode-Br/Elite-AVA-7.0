@@ -1,3 +1,12 @@
+// Função auxiliar para cards de estatística
+const statCard = (label, id, val, bgClass, textClass) => {
+    return `
+    <div class="${bgClass} p-4 rounded-2xl border border-slate-100 dark:border-white/5 shadow-sm">
+        <div class="text-xs font-bold opacity-70 uppercase tracking-wider mb-1 ${textClass}">${label}</div>
+        <div class="text-2xl font-bold font-display ${textClass}" id="${id}">${val}</div>
+    </div>`;
+};
+
 export const ViewComponents = {
     
     renderDashboard: () => {
@@ -57,92 +66,86 @@ export const ViewComponents = {
                                 Inteligência Tática
                             </h4>
                             <div class="min-h-[120px]">
-                                <div id="daily-briefing-loading" class="animate-pulse space-y-3 mt-4 hidden">
-                                    <div class="h-2 bg-white/10 rounded w-3/4"></div><div class="h-2 bg-white/10 rounded w-1/2"></div>
-                                </div>
-                                <div id="daily-briefing-content" class="text-sm text-slate-300 leading-relaxed prose prose-invert prose-sm max-w-none mt-2">
+                                <div id="daily-briefing-content" class="text-sm text-slate-300 leading-relaxed">
                                     </div>
                             </div>
-                            <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
-                                <span class="text-[10px] text-slate-400 font-mono" id="intel-date">--/--</span>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="bg-white dark:bg-dark-800 rounded-3xl p-6 border border-slate-100 dark:border-white/5 flex flex-col items-center justify-center text-center relative overflow-hidden">
-                        <h4 class="font-bold text-slate-700 dark:text-white text-sm mb-4">Progresso Geral</h4>
-                        <div class="relative w-40 h-40">
-                            <svg class="w-full h-full transform -rotate-90"><circle cx="80" cy="80" r="40" stroke="currentColor" stroke-width="8" fill="transparent" class="text-slate-100 dark:text-white/5" /><circle id="dash-circle-progress" cx="80" cy="80" r="40" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="text-blue-500 transition-all duration-1000 ease-out" /></svg>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span class="text-3xl font-bold text-slate-800 dark:text-white" id="dash-percent-text">0%</span>
-                            </div>
+                    
+                    <div class="bg-white dark:bg-dark-800 rounded-3xl p-6 border border-slate-100 dark:border-white/5 shadow-sm">
+                        <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-4">Progresso Geral</h4>
+                        <div class="relative w-40 h-40 mx-auto">
+                             <svg class="w-full h-full transform -rotate-90"><circle cx="80" cy="80" r="40" stroke="currentColor" stroke-width="8" fill="transparent" class="text-slate-100 dark:text-white/5" /><circle id="dash-circle-progress" cx="80" cy="80" r="40" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="text-blue-500 transition-all duration-1000 ease-out" /></svg>
+                             <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                 <span class="text-3xl font-bold text-slate-800 dark:text-white" id="dash-percent-text">0%</span>
+                             </div>
                         </div>
-                        <p class="text-xs text-slate-400 mt-4"><span id="dash-completed-count">0</span> missões cumpridas</p>
+                        <p class="text-xs text-slate-400 mt-4 text-center"><span id="dash-completed-count">0</span> missões cumpridas</p>
                     </div>
                 </div>
-            </div>
-        </div>`;
+            </div>`;
     },
 
     renderOtherViews: () => {
         return `
         <div id="view-schedule" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Jornada Completa</h2>
-            <div class="space-y-0" id="full-schedule-container"></div>
+             <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Jornada Completa</h2>
+             <div class="space-y-0" id="full-schedule-container"></div>
         </div>
-
+        
         <div id="view-library" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Biblioteca Tática</h2>
-                <div class="flex gap-2">
-                    <input type="text" id="search-input" placeholder="Buscar tópico..." onkeyup="searchContent()" class="bg-white dark:bg-dark-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:border-blue-500 outline-none w-full md:w-64">
-                    <select id="library-filter-select" onchange="setLibraryFilter(this.value)" class="bg-white dark:bg-dark-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:border-blue-500 outline-none"></select>
+             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Biblioteca</h2>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <select id="library-filter-select" onchange="setLibraryFilter(this.value)" class="bg-white dark:bg-dark-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-blue-500"></select>
+                    <input type="text" id="search-input" onkeyup="searchContent()" placeholder="Buscar tópico..." class="bg-white dark:bg-dark-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm text-slate-700 dark:text-white focus:outline-none focus:border-blue-500 w-full md:w-64">
                 </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="library-results"></div>
+             </div>
+             <div id="library-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
-
-        <div id="view-edital" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500 h-[calc(100vh-140px)]">
-            <div class="bg-white dark:bg-dark-800 rounded-3xl border border-slate-100 dark:border-white/5 h-full flex flex-col overflow-hidden">
-                <div class="p-4 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50 dark:bg-white/5">
-                    <h3 class="font-bold text-slate-700 dark:text-white text-sm">Edital Verticalizado.pdf</h3>
-                    <button onclick="toggleFullscreenPDF()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition">Expandir Tela Cheia</button>
-                </div>
-                <iframe src="edital.pdf" class="w-full h-full" id="pdf-frame-embed"></iframe>
-            </div>
-        </div>
-
+        
         <div id="view-stats" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Relatório de Performance</h2>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Estatísticas</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white dark:bg-dark-800 p-6 rounded-3xl border border-slate-100 dark:border-white/5">
-                    <h4 class="font-bold mb-4 text-slate-700 dark:text-white">Distribuição por Matéria</h4>
+                    <h4 class="font-bold text-slate-700 dark:text-white mb-4">Distribuição por Matéria</h4>
                     <div class="h-64"><canvas id="subjectChart"></canvas></div>
                 </div>
                 <div class="bg-white dark:bg-dark-800 p-6 rounded-3xl border border-slate-100 dark:border-white/5">
-                    <h4 class="font-bold mb-4 text-slate-700 dark:text-white">Histórico Recente</h4>
-                    <div class="overflow-y-auto h-64">
-                         <table class="w-full text-left border-collapse">
-                            <thead><tr><th class="text-xs font-bold text-slate-400 uppercase pb-2">Tarefa</th><th class="text-xs font-bold text-slate-400 uppercase pb-2">Matéria</th><th class="text-xs font-bold text-slate-400 uppercase pb-2 text-right">Data</th></tr></thead>
-                            <tbody id="history-table-body" class="text-sm"></tbody>
-                        </table>
-                        <div id="history-empty-state" class="hidden text-center text-slate-400 py-8 text-xs">Nenhuma atividade recente.</div>
-                    </div>
+                     <h4 class="font-bold text-slate-700 dark:text-white mb-4">Histórico de Conquistas</h4>
+                     <div id="achievements-list-history" class="space-y-2"></div>
                 </div>
             </div>
         </div>
 
         <div id="view-achievements" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Galeria de Troféus</h2>
-                <p class="text-slate-500 dark:text-slate-400">Suas medalhas de honra ao mérito.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="achievements-grid"></div>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Conquistas</h2>
+            <div id="achievements-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+        </div>
+        
+        <div id="view-edital" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500 h-[calc(100vh-140px)]">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+                <div class="bg-slate-800 rounded-3xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-slate-900 p-3 flex justify-between items-center border-b border-slate-700">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Visualizador PDF</span>
+                        <button onclick="toggleFullscreenPDF()" class="text-xs text-blue-400 hover:text-white">Expandir</button>
+                    </div>
+                    <iframe id="pdf-frame" src="edital.pdf" class="flex-1 w-full h-full bg-slate-100"></iframe>
+                </div>
+                <div class="bg-white dark:bg-dark-800 rounded-3xl border border-slate-100 dark:border-white/5 shadow-lg flex flex-col overflow-hidden">
+                    <div class="p-4 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-dark-900/50">
+                        <h3 class="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> IA Tática
+                        </h3>
+                    </div>
+                    <div id="chat-container" class="flex-1 p-4 overflow-y-auto space-y-4"></div>
+                    <form onsubmit="handleChat(event)" class="p-4 border-t border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-dark-900/50 flex gap-2">
+                        <input id="chat-input" type="text" placeholder="Pergunte sobre o edital..." class="flex-1 bg-white dark:bg-dark-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 text-sm focus:outline-none focus:border-blue-500 text-slate-800 dark:text-white">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2 font-bold transition-colors">Enviar</button>
+                    </form>
+                </div>
+             </div>
         </div>
         `;
     }
 };
-
-function statCard(label, id, value, bg, text) {
-    return `<div class="${bg} rounded-2xl p-4 md:p-5 border border-slate-100 dark:border-white/5 shadow-sm flex flex-col justify-between h-full"><span class="text-xs font-bold opacity-70 uppercase tracking-wider mb-2 ${text}">${label}</span><span class="text-2xl md:text-3xl font-bold ${text}" id="${id}">${value}</span></div>`;
-}

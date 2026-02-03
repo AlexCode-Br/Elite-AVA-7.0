@@ -2,6 +2,17 @@ export const LayoutComponents = {
     
     // Renderiza o Menu Lateral
     renderSidebar: () => {
+        // Função auxiliar interna para gerar botões
+        const navButton = (id, label, pathData, active = false) => {
+            return `
+            <div onclick="switchView('${id}')" class="nav-item ${active ? 'active' : ''} flex items-center px-4 py-4 text-base font-semibold cursor-pointer text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white whitespace-nowrap group">
+                <svg class="w-6 h-6 mr-3 shrink-0 ${active ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="${pathData}"></path>
+                </svg>
+                <span class="nav-label">${label}</span>
+            </div>`;
+        };
+
         return `
         <aside id="main-sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-dark-900 border-r border-slate-100 dark:border-white/5 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 md:w-64 flex flex-col justify-between">
             <div>
@@ -16,19 +27,17 @@ export const LayoutComponents = {
                     ${navButton('library', 'Biblioteca', 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253')}
                     ${navButton('edital', 'Edital Vertical', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z')}
                     ${navButton('stats', 'Estatísticas', 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z')}
-                    ${navButton('achievements', 'Conquistas', 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z')}
+                    ${navButton('achievements', 'Conquistas', 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714-2.143L13 3z')}
                 </nav>
-            </div>
-
-            <div class="p-4 border-t border-slate-50 dark:border-white/5">
-                <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition-all mb-2">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <span class="nav-label">Alternar Tema</span>
-                </button>
-                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    <span class="nav-label">Sair</span>
-                </button>
+                
+                <div class="p-4 border-t border-slate-50 dark:border-white/5">
+                    <button onclick="handleLogout()" class="w-full flex items-center px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition">
+                        <svg class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span class="nav-label">Sair</span>
+                    </button>
+                </div>
             </div>
         </aside>`;
     },
@@ -51,22 +60,22 @@ export const LayoutComponents = {
             </div>
 
             <div class="flex items-center gap-3 md:gap-6">
-                 <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-500/30">
+                <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-white/5 rounded-lg border border-slate-200 dark:border-white/10">
                     <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                     </span>
-                    <span class="text-xs font-bold text-blue-700 dark:text-blue-300">Prova: <span id="header-countdown">--</span> dias</span>
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Sistema Online</span>
                 </div>
+                
+                <div class="w-px h-8 bg-slate-200 dark:bg-white/10 hidden md:block"></div>
 
-                <div class="h-8 w-px bg-slate-200 dark:bg-white/10 mx-2 hidden md:block"></div>
-
-                <div class="flex items-center gap-3 cursor-pointer group" onclick="openProfileModal()">
+                <div class="flex items-center gap-3 group cursor-pointer" onclick="openProfileModal()">
                     <div class="text-right hidden sm:block">
-                        <p class="text-sm font-bold text-slate-700 dark:text-white group-hover:text-blue-600 dark:group-hover:text-neon-blue transition-colors" id="header-name">Carregando...</p>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-blue-400 transition-colors">Nível <span id="profile-level-num">1</span></p>
+                        <p class="text-sm font-bold text-slate-800 dark:text-white" id="header-name">Carregando...</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Estudante</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold text-lg border-2 border-transparent group-hover:border-blue-400 dark:group-hover:border-neon-blue transition-all" id="profile-avatar-char">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold border-2 border-white dark:border-dark-900 shadow-sm group-hover:border-blue-500 transition-colors" id="profile-avatar-char">
                         E
                     </div>
                 </div>
@@ -74,13 +83,3 @@ export const LayoutComponents = {
         </header>`;
     }
 };
-
-// Helper interno para gerar botões
-function navButton(id, label, path, active = false) {
-    return `
-    <button onclick="switchView('${id}')" class="nav-item w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all group ${active ? 'active' : ''}">
-        <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${path}"></path></svg>
-        <span class="nav-label whitespace-nowrap">${label}</span>
-        ${active ? '<div class="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-neon-blue shadow-[0_0_8px_rgba(37,99,235,0.6)]"></div>' : ''}
-    </button>`;
-}
