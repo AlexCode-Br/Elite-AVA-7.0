@@ -9,6 +9,35 @@ import { NavigationUI } from './ui/navigation.ui.js';
 import { ModalsUI } from './ui/modals.ui.js';
 import { AnimationsUI } from './ui/animations.ui.js';
 import { ThemeUI } from './ui/theme.ui.js';
+// Imports de Componentes Visuais
+import { LayoutComponents } from './ui/components/layout.js';
+import { ViewComponents } from './ui/components/views.js';
+
+// --- INJEÇÃO DO LAYOUT (RENDERIZAÇÃO INICIAL) ---
+// Esta função roda IMEDIATAMENTE para criar o HTML do site
+function renderAppLayout() {
+    const root = document.getElementById('app-root');
+    if(!root) return;
+    
+    // Injeta o esqueleto do site (Menu + Header + Áreas de Conteúdo)
+    root.innerHTML = `
+        ${LayoutComponents.renderSidebar()}
+        
+        <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden backdrop-blur-sm transition-opacity"></div>
+        
+        <main class="flex-1 md:ml-64 transition-all duration-300 flex flex-col min-h-screen">
+            ${LayoutComponents.renderHeader()}
+            
+            <div class="p-4 md:p-8 max-w-7xl mx-auto w-full flex-1">
+                ${ViewComponents.renderDashboard()}
+                ${ViewComponents.renderOtherViews()}
+            </div>
+        </main>
+    `;
+}
+
+// Executa a construção da tela
+renderAppLayout();
 
 // --- CONSTANTES & DADOS ---
 const XP_PER_TASK = 150;
@@ -26,7 +55,7 @@ const ranksList = [
     "Catedrático", "Excelência", "Lenda Viva", "Supremo"
 ];
 
-// --- DADOS DO CRONOGRAMA ---
+// Dados do Cronograma
 const scheduleData = [
     { date: "2026-02-02", week: 1, day: "Segunda", items: [{ id: "s1_seg_1", type: "red", subj: "Dir. Adm", desc: "Item 4: Lei 9.784/99 (Processo Adm e Órgãos)" }, { id: "s1_seg_2", type: "blue", subj: "Português", desc: "Itens 1 e 2: Leitura, Interpretação e Tipologia" }] },
     { date: "2026-02-03", week: 1, day: "Terça", items: [{ id: "s1_ter_1", type: "red", subj: "Dir. Adm", desc: "Item 10: Dec-Lei 200/67 (Org. Federal)" }, { id: "s1_ter_2", type: "gray", subj: "Lógica", desc: "Item 18: Estruturas Lógicas e Diagramas" }] },
@@ -93,7 +122,7 @@ const achievementsList = [
     { id: 'legislator', title: 'Jurista', desc: 'Complete 10 tarefas de Direito.', icon: '⚖️', max: 10, progress: (s) => s.subjectCounts['Direito'] || 0, req: (s) => (s.subjectCounts['Direito'] || 0) >= 10 }
 ];
 
-// --- VARIÁVEIS GLOBAIS DE UI ---
+// --- VARIÁVEIS GLOBAIS DE ESTADO UI ---
 let isRegistering = false;
 let chartInstance = null;
 let currentLibFilter = 'Todos';
@@ -103,8 +132,8 @@ let currentTopicTitle = "";
 let currentTopicContext = "";
 const intelCache = {}; 
 
-// --- BINDING PARA O WINDOW ---
-window.switchView = NavigationUI.switchView;
+// --- BINDING PARA O WINDOW (Necessário para os onclicks do HTML) ---
+window.switchView = NavigationUI.switchView; // Agora muda o Hash
 window.toggleSidebar = NavigationUI.toggleSidebar;
 window.toggleSidebarDesktop = NavigationUI.toggleSidebarDesktop;
 window.scrollToTasks = () => NavigationUI.scrollTo('task-section');
@@ -138,14 +167,15 @@ window.openContentModal = (id) => {
     ModalsUI.openContent(item);
 };
 
-// --- INICIALIZAÇÃO ---
+// --- INICIALIZAÇÃO DE EVENTOS E ESTADO ---
 
-ThemeUI.init(); 
+ThemeUI.init(); // Inicializa tema (Escuro/Claro)
 
+// 1. O App reage a qualquer mudança no UserState
 UserState.subscribe((state) => {
     if (state.isAuthenticated) {
         updateHeaderUI(state);
-        initApp();
+        initApp(); // Redesenha a tela com dados novos
     }
 });
 
@@ -166,6 +196,7 @@ function updateHeaderUI(state) {
     }
 }
 
+// 2. Monitora Login/Logout do Firebase
 AuthService.onAuthStateChanged((user) => {
     if (user) {
         UserState.setAuthUser(user);
@@ -182,7 +213,10 @@ AuthService.onAuthStateChanged((user) => {
     }
 });
 
+// --- RENDERIZAÇÃO LÓGICA (Preenche os dados nos componentes) ---
+
 function initApp() {
+    // Estas funções preenchem os "buracos" do HTML gerado pelo Views.js
     renderDashboard();
     renderGamification();
     renderCalendar();
@@ -191,101 +225,34 @@ function initApp() {
     renderLibraryFilters();
     window.searchContent();
     updateChartTheme();
-    // RecommendationsUI.render removido daqui para não conflitar com a IA
-}
-
-// --- LÓGICA DE NEGÓCIO MISTA ---
-
-window.handleAuth = async (e) => {
-    e.preventDefault();
-    ModalsUI.clearAuthErrors();
-    const email = document.getElementById('auth-email').value.trim();
-    const password = document.getElementById('auth-password').value;
-    const name = document.getElementById('auth-name').value.trim();
     
-    let isValid = true;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { ModalsUI.showAuthError('auth-email', 'E-mail inválido.'); isValid = false; }
-    if (password.length < 6) { ModalsUI.showAuthError('auth-password', 'Mínimo 6 caracteres.'); isValid = false; }
-    if (isRegistering && name.length < 3) { ModalsUI.showAuthError('auth-name', 'Digite seu nome.'); isValid = false; }
-
-    if (!isValid) return;
-
-    const btn = document.getElementById('auth-btn');
-    const originalBtnContent = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
-
-    try {
-        if (isRegistering) {
-            await AuthService.register(email, password, name);
-        } else {
-            await AuthService.login(email, password);
-        }
-    } catch (error) {
-        let msg = "Erro desconhecido.";
-        if (error.code.includes('password')) ModalsUI.showAuthError('auth-password', 'Senha incorreta.');
-        else if (error.code.includes('email') || error.code === 'auth/user-not-found') ModalsUI.showAuthError('auth-email', 'E-mail incorreto.');
-        else {
-            document.getElementById('global-error-text').innerText = "Erro de autenticação. Tente novamente.";
-            document.getElementById('auth-global-error').classList.remove('hidden');
-        }
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalBtnContent;
-    }
-};
-
-window.checkPasswordStrength = (password) => {
-    if (!isRegistering) return; 
-    const meterContainer = document.getElementById('password-strength-container');
-    if(password.length === 0) {
-        meterContainer.classList.remove('active');
-        return;
-    }
-    meterContainer.classList.add('active');
-    let score = 0;
-    if (password.length > 5) score++;
-    if (password.length > 8) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
+    // --- LÓGICA DE ROTEAMENTO (PARTE 8) ---
+    // 1. Lê a URL atual (ex: #library) ou define padrão
+    const currentHash = window.location.hash.replace('#', '') || 'dashboard';
     
-    AnimationsUI.animatePasswordStrength(score);
-};
+    // 2. Renderiza a tela correta (usando renderViewChange direto, não switchView)
+    NavigationUI.renderViewChange(currentHash);
 
-window.handleGuestLogin = async () => { try { await AuthService.loginGuest(); } catch (e) { console.error(e); } };
-window.handleLogout = async () => { try { await AuthService.logout(); location.reload(); } catch(e) { console.error(e); } }
-
-window.saveProfileName = async () => {
-    const newName = document.getElementById('edit-profile-name').value.trim();
-    const user = AuthService.getCurrentUser();
-    if(!newName || !user) return;
-    try {
-        await AuthService.updateUserProfile(user, newName);
-        UserState.setAuthUser({ ...user, displayName: newName });
-        AnimationsUI.showToast("Sucesso", "Nome atualizado!");
-    } catch(e) {
-        AnimationsUI.showToast("Erro", "Não foi possível atualizar.");
+    // 3. Se estiver no dashboard, checa data (para IA e lista de tarefas)
+    if(currentHash === 'dashboard' && !currentSelectedDate) {
+        selectDate(new Date().toISOString().split('T')[0] > '2026-02-02' ? new Date().toISOString().split('T')[0] : '2026-02-02');
     }
 }
 
-window.handlePasswordResetProfile = async () => {
-    const state = UserState.get();
-    if(!state.email) return;
-    try {
-        await AuthService.resetPassword(state.email);
-        AnimationsUI.showToast("E-mail Enviado", "Verifique sua caixa de entrada.");
-    } catch(e) {
-        AnimationsUI.showToast("Erro", "Falha ao enviar e-mail.");
-    }
-}
+// --- ESCUTAR MUDANÇAS NA URL (Histórico do Navegador) ---
+window.addEventListener('hashchange', () => {
+    const viewId = window.location.hash.replace('#', '') || 'dashboard';
+    NavigationUI.renderViewChange(viewId);
+});
 
-// --- RENDERIZAÇÃO ---
 
 function renderDashboard() {
     const state = UserState.get();
     const examDate = new Date('2026-03-29');
     const diff = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
-    document.getElementById('header-countdown').innerText = diff > 0 ? diff : "HOJE";
+    
+    const countdownEl = document.getElementById('header-countdown');
+    if(countdownEl) countdownEl.innerText = diff > 0 ? diff : "HOJE";
 
     const total = scheduleData.reduce((acc, d) => acc + d.items.length, 0);
     const done = state.checkedItems.length;
@@ -293,11 +260,14 @@ function renderDashboard() {
     
     const circle = document.getElementById('dash-circle-progress');
     if (circle) circle.style.strokeDashoffset = (2 * Math.PI * 40) * (1 - percent / 100);
-    document.getElementById('dash-percent-text').innerText = `${percent}%`;
-    document.getElementById('dash-completed-count').innerText = done;
     
-    if(!currentSelectedDate) selectDate(new Date().toISOString().split('T')[0] > '2026-02-02' ? new Date().toISOString().split('T')[0] : '2026-02-02');
-    else selectDate(currentSelectedDate);
+    const percentText = document.getElementById('dash-percent-text');
+    if(percentText) percentText.innerText = `${percent}%`;
+    
+    const completedCount = document.getElementById('dash-completed-count');
+    if(completedCount) completedCount.innerText = done;
+    
+    if(currentSelectedDate) selectDate(currentSelectedDate);
 }
 
 function renderCalendar() {
@@ -359,8 +329,12 @@ window.selectDate = (dateStr) => {
     
     const data = scheduleData.find(d => d.date === dateStr);
     const dateObj = new Date(dateStr + 'T12:00:00');
-    document.getElementById('selected-date-label').innerText = `${dateObj.getDate()}/${dateObj.getMonth()+1}`;
-    document.getElementById('intel-date').innerText = dateStr;
+    
+    const labelDate = document.getElementById('selected-date-label');
+    if(labelDate) labelDate.innerText = `${dateObj.getDate()}/${dateObj.getMonth()+1}`;
+    
+    const intelDate = document.getElementById('intel-date');
+    if(intelDate) intelDate.innerText = dateStr;
     
     generateDailyBriefing(dateStr);
 
@@ -402,13 +376,12 @@ window.selectDate = (dateStr) => {
     document.getElementById('daily-progress-text').innerText = `${dailyDone}/${dailyTotal} Completas`;
 }
 
-// CORREÇÃO: Função Unificada de Inteligência
+// LÓGICA DE INTELIGÊNCIA HÍBRIDA (IA + COMPORTAMENTAL)
 async function generateDailyBriefing(dateStr) {
     const container = document.getElementById('daily-briefing-content');
     const loading = document.getElementById('daily-briefing-loading');
     if (!container || !loading) return;
 
-    // 1. Se já tiver cache da IA, mostra
     if (intelCache[dateStr]) {
         loading.classList.add('hidden');
         container.innerHTML = intelCache[dateStr];
@@ -416,13 +389,12 @@ async function generateDailyBriefing(dateStr) {
         return;
     }
 
-    // 2. Prepara UI
     container.classList.add('hidden');
     loading.classList.remove('hidden');
 
     const data = scheduleData.find(d => d.date === dateStr);
     
-    // CASO 1: Dia sem tarefas ou dia futuro -> Mostra Insights Comportamentais
+    // CASO 1: Sem tarefas -> Mostra Insights
     if(!data || !data.items.length) {
         loading.classList.add('hidden');
         container.classList.remove('hidden');
@@ -430,7 +402,7 @@ async function generateDailyBriefing(dateStr) {
         return;
     }
 
-    // CASO 2: Dia com tarefas -> Chama IA
+    // CASO 2: Com tarefas -> Chama IA
     const subjects = data.items.map(i => `${i.subj}: ${i.desc}`).join('; ');
     const prompt = `Resumo tático curto para: ${subjects}. Use emojis e negrito.`;
 
@@ -446,7 +418,7 @@ async function generateDailyBriefing(dateStr) {
         intelCache[dateStr] = html;
         container.innerHTML = html;
     } catch(e) {
-        // Fallback em caso de erro da IA: Mostra Insights
+        // Fallback
         RecommendationsUI.render(scheduleData);
     } finally {
         loading.classList.add('hidden');
@@ -454,6 +426,7 @@ async function generateDailyBriefing(dateStr) {
     }
 }
 
+// AÇÃO PRINCIPAL DE CHECK (Conecta com Cloud Function segura)
 window.toggleItem = async (id) => {
     const checkbox = document.querySelector(`input[onchange="toggleItem('${id}')"]`);
     if(checkbox) checkbox.disabled = true;
@@ -666,13 +639,9 @@ function checkAchievements(level, computedStats) {
     
     achievementsList.forEach(ach => {
         if (ach.type !== 'counter' && !state.achievements.includes(ach.id) && ach.req(stats)) {
-            // Atualiza via UserState
             const newAchievements = [...state.achievements, ach.id];
             UserState.updateProgress({ achievements: newAchievements });
-            
             AnimationsUI.showToast("Conquista Desbloqueada", ach.title);
-            // Salvar será feito na próxima sincronização ou podemos forçar
-            // Mas o ideal é que UserState gerencie, aqui só atualizamos a UI
         }
     });
     renderAchievements(stats);
@@ -871,4 +840,86 @@ window.handleChat = async (e) => {
     }
     btn.disabled = false;
     container.scrollTop = container.scrollHeight;
+}
+
+window.handleAuth = async (e) => {
+    e.preventDefault();
+    ModalsUI.clearAuthErrors();
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const name = document.getElementById('auth-name').value.trim();
+    
+    let isValid = true;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { ModalsUI.showAuthError('auth-email', 'E-mail inválido.'); isValid = false; }
+    if (password.length < 6) { ModalsUI.showAuthError('auth-password', 'Mínimo 6 caracteres.'); isValid = false; }
+    if (isRegistering && name.length < 3) { ModalsUI.showAuthError('auth-name', 'Digite seu nome.'); isValid = false; }
+
+    if (!isValid) return;
+
+    const btn = document.getElementById('auth-btn');
+    const originalBtnContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+
+    try {
+        if (isRegistering) {
+            await AuthService.register(email, password, name);
+        } else {
+            await AuthService.login(email, password);
+        }
+    } catch (error) {
+        let msg = "Erro desconhecido.";
+        if (error.code.includes('password')) ModalsUI.showAuthError('auth-password', 'Senha incorreta.');
+        else if (error.code.includes('email') || error.code === 'auth/user-not-found') ModalsUI.showAuthError('auth-email', 'E-mail incorreto.');
+        else {
+            document.getElementById('global-error-text').innerText = "Erro de autenticação. Tente novamente.";
+            document.getElementById('auth-global-error').classList.remove('hidden');
+        }
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnContent;
+    }
+};
+
+window.checkPasswordStrength = (password) => {
+    if (!isRegistering) return; 
+    const meterContainer = document.getElementById('password-strength-container');
+    if(password.length === 0) {
+        meterContainer.classList.remove('active');
+        return;
+    }
+    meterContainer.classList.add('active');
+    let score = 0;
+    if (password.length > 5) score++;
+    if (password.length > 8) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+    AnimationsUI.animatePasswordStrength(score);
+};
+
+window.handleGuestLogin = async () => { try { await AuthService.loginGuest(); } catch (e) { console.error(e); } };
+window.handleLogout = async () => { try { await AuthService.logout(); location.reload(); } catch(e) { console.error(e); } }
+
+window.saveProfileName = async () => {
+    const newName = document.getElementById('edit-profile-name').value.trim();
+    const user = AuthService.getCurrentUser();
+    if(!newName || !user) return;
+    try {
+        await AuthService.updateUserProfile(user, newName);
+        UserState.setAuthUser({ ...user, displayName: newName });
+        AnimationsUI.showToast("Sucesso", "Nome atualizado!");
+    } catch(e) {
+        AnimationsUI.showToast("Erro", "Não foi possível atualizar.");
+    }
+}
+
+window.handlePasswordResetProfile = async () => {
+    const state = UserState.get();
+    if(!state.email) return;
+    try {
+        await AuthService.resetPassword(state.email);
+        AnimationsUI.showToast("E-mail Enviado", "Verifique sua caixa de entrada.");
+    } catch(e) {
+        AnimationsUI.showToast("Erro", "Falha ao enviar e-mail.");
+    }
 }
