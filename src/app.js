@@ -30,16 +30,82 @@ const ranksList = [
     "Catedrático", "Excelência", "Lenda Viva", "Supremo"
 ];
 
-// --- DADOS DO CRONOGRAMA ---
+// --- DADOS DO CRONOGRAMA 5.0 (ATUALIZADO CONFORME PDF) ---
 const scheduleData = [
-    { date: "2026-02-02", week: 1, day: "Segunda", items: [{ id: "s1_seg_1", type: "red", subj: "Dir. Adm", desc: "Item 4: Lei 9.784/99 (Processo Adm e Órgãos)" }, { id: "s1_seg_2", type: "blue", subj: "Português", desc: "Itens 1 e 2: Leitura, Interpretação e Tipologia" }] },
-    { date: "2026-02-03", week: 1, day: "Terça", items: [{ id: "s1_ter_1", type: "red", subj: "Dir. Adm", desc: "Item 10: Dec-Lei 200/67 (Org. Federal)" }, { id: "s1_ter_2", type: "gray", subj: "Lógica", desc: "Item 18: Estruturas Lógicas e Diagramas" }] },
-    { date: "2026-02-04", week: 1, day: "Quarta", items: [{ id: "s1_qua_1", type: "red", subj: "Adm. Púb", desc: "Item 5: Agentes Públicos (Cargos e Funções)" }, { id: "s1_qua_2", type: "blue", subj: "Português", desc: "Item 3: Semântica e Significação das Palavras" }] },
-    { date: "2026-02-05", week: 1, day: "Quinta", items: [{ id: "s1_qui_1", type: "red", subj: "Leg. BA", desc: "Item 12: Lei 13.204/14 (Est. Organizacional)" }, { id: "s1_qui_2", type: "red", subj: "Leg. BA", desc: "Itens 13 e 14: Leis 10.549 e 12.212 (Executivo)" }] },
-    { date: "2026-02-06", week: 1, day: "Sexta", items: [{ id: "s1_sex_1", type: "green", subj: "Gestão", desc: "Item 11: Dec. 9.739/19 (Eficiência/Inovação)" }, { id: "s1_sex_2", type: "red", subj: "Const.", desc: "Item 6: Princípios LIMPE + Questões" }] },
-    { date: "2026-02-07", week: 1, day: "Sábado", items: [{ id: "s1_sab", type: "orange", subj: "Revisão", desc: "Resumo Geral + 40 Questões IBFC" }] },
-    { date: "2026-02-08", week: 1, day: "Domingo", items: [{ id: "s1_dom", type: "gray", subj: "Descanso", desc: "Descanso Estratégico e Mental" }] },
-    { date: "2026-02-09", week: 2, day: "Segunda", items: [{ id: "s2_seg_1", type: "red", subj: "CF/88", desc: "Itens 7 e 15: Educação na CF + Dir. Subjetivo" }, { id: "s2_seg_2", type: "blue", subj: "Português", desc: "Item 4: Pontuação e Sinais Gráficos" }] },
+    // --- FASE 1: FUNDAÇÃO (Semanas 1 e 2) ---
+    // SEMANA 01
+    { date: "2026-02-02", week: 1, day: "Segunda", items: [{ id: "w1_seg_1", type: "red", subj: "Dir. Adm", desc: "Item 4: Lei 9.784/99 (Processo Adm e Órgãos)" }, { id: "w1_seg_2", type: "blue", subj: "Português", desc: "Itens 1 e 2: Leitura, Interpretação e Tipologia Textual" }] },
+    { date: "2026-02-03", week: 1, day: "Terça", items: [{ id: "w1_ter_1", type: "red", subj: "Dir. Adm", desc: "Item 10: Dec-Lei 200/67 (Organização Federal)" }, { id: "w1_ter_2", type: "purple", subj: "Lógica", desc: "Item 18: Estruturas Lógicas e Diagramas" }] },
+    { date: "2026-02-04", week: 1, day: "Quarta", items: [{ id: "w1_qua_1", type: "red", subj: "Adm. Púb", desc: "Item 5: Agentes Públicos (Cargos e Funções)" }, { id: "w1_qua_2", type: "blue", subj: "Português", desc: "Item 3: Semântica e Significação das Palavras" }] },
+    { date: "2026-02-05", week: 1, day: "Quinta", items: [{ id: "w1_qui_1", type: "yellow", subj: "Leg. BA", desc: "Item 12: Lei BA 13.204/14 (Est. Organizacional)" }, { id: "w1_qui_2", type: "yellow", subj: "Leg. BA", desc: "Itens 13 e 14: Leis Est. 10.549 e 12.212 (Estrutura)" }] },
+    { date: "2026-02-06", week: 1, day: "Sexta", items: [{ id: "w1_sex_1", type: "green", subj: "Gestão", desc: "Item 11: Dec. 9.739/19 (Eficiência e Inovação)" }, { id: "w1_sex_2", type: "red", subj: "Const.", desc: "Item 6: Princípios Constitucionais (LIMPE) + Questões" }] },
+    { date: "2026-02-07", week: 1, day: "Sábado", items: [{ id: "w1_sab", type: "orange", subj: "Revisão", desc: "Resumo Geral + Bateria de 40 Questões IBFC" }] },
+    { date: "2026-02-08", week: 1, day: "Domingo", items: [{ id: "w1_dom", type: "gray", subj: "Descanso", desc: "Descanso Estratégico e Mental" }] },
+
+    // SEMANA 02
+    { date: "2026-02-09", week: 2, day: "Segunda", items: [{ id: "w2_seg_1", type: "red", subj: "CF/88", desc: "Itens 7 e 15: CF/88 (Educação) + Dir. Subjetivo" }, { id: "w2_seg_2", type: "blue", subj: "Português", desc: "Item 4: Pontuação (Recursos sintático-semânticos)" }] },
+    { date: "2026-02-10", week: 2, day: "Terça", items: [{ id: "w2_ter_1", type: "pink", subj: "LDB", desc: "Item 13: LDB (Sistemas de Ensino)" }, { id: "w2_ter_2", type: "purple", subj: "Lógica", desc: "Item 18: Raciocínio Lógico (Argumentação e Dedução)" }] },
+    { date: "2026-02-11", week: 2, day: "Quarta", items: [{ id: "w2_qua_1", type: "pink", subj: "LDB", desc: "Item 1: LDB (Diretrizes Nacionais)" }, { id: "w2_qua_2", type: "pink", subj: "Pedagogia", desc: "Itens 2 e 3: Histórico-Crítica e PPP" }] },
+    { date: "2026-02-12", week: 2, day: "Quinta", items: [{ id: "w2_qui_1", type: "pink", subj: "Pedagogia", desc: "Item 16: Resoluções CNE (Diretrizes/Supervisão)" }, { id: "w2_qui_2", type: "blue", subj: "Português", desc: "Itens 1-4: Sintaxe básica aplicada ao texto" }] },
+    { date: "2026-02-13", week: 2, day: "Sexta", items: [{ id: "w2_sex_1", type: "lime", subj: "Profissão", desc: "Item 1: Res. CNE/CP 1/2021 (Diretrizes EPT)" }, { id: "w2_sex_2", type: "blue", subj: "Português", desc: "Revisão de Sintaxe e Questões de Texto" }] },
+    { date: "2026-02-14", week: 2, day: "Sábado", items: [{ id: "w2_sab", type: "orange", subj: "Revisão", desc: "Mapa Mental da Educação: LDB + PPP + CF/88" }] },
+    { date: "2026-02-15", week: 2, day: "Domingo", items: [{ id: "w2_dom", type: "gray", subj: "Descanso", desc: "Recuperação Ativa" }] },
+
+    // --- FASE 2: IMERSÃO ESPECÍFICA (Semanas 3, 4 e 5) ---
+    // SEMANA 03
+    { date: "2026-02-16", week: 3, day: "Segunda", items: [{ id: "w3_seg_1", type: "cyan", subj: "ECA", desc: "Item 14: ECA (Direito à Educação)" }, { id: "w3_seg_2", type: "indigo", subj: "Social", desc: "Item 4: Índices de Pobreza e Projetos Sociais" }] },
+    { date: "2026-02-17", week: 3, day: "Terça", items: [{ id: "w3_ter_1", type: "indigo", subj: "Social", desc: "Item 4: Dec. BA 12.830/11 (Pobreza)" }, { id: "w3_ter_2", type: "purple", subj: "Lógica", desc: "Item 18: Raciocínio Espacial e Temporal" }] },
+    { date: "2026-02-18", week: 3, day: "Quarta", items: [{ id: "w3_qua_1", type: "indigo", subj: "Social", desc: "Itens 5, 7 e 8: Dec. 4.564, Res. 01/21 e 03/25" }, { id: "w3_qua_2", type: "indigo", subj: "Social", desc: "Item 6: Lei 14.945/24 + Revisão ECA" }] },
+    { date: "2026-02-19", week: 3, day: "Quinta", items: [{ id: "w3_qui_1", type: "red", subj: "Rev. Adm", desc: "Revisão Ativa: Direito Adm (Conteúdo Sem 1)" }, { id: "w3_qui_2", type: "blue", subj: "Rev. Port", desc: "Revisão Ativa: Português (Refazer erros)" }] },
+    { date: "2026-02-20", week: 3, day: "Sexta", items: [{ id: "w3_sex_1", type: "violet", subj: "Contexto", desc: "Itens 1 e 4: Realidade BR e Desafios Educacionais" }, { id: "w3_sex_2", type: "purple", subj: "Lógica", desc: "Treino de Psicotécnico e Sequências" }] },
+    { date: "2026-02-21", week: 3, day: "Sábado", items: [{ id: "w3_sab", type: "orange", subj: "Simulado", desc: "Simulado Parcial (4h): Adm + LDB + Português" }] },
+    { date: "2026-02-22", week: 3, day: "Domingo", items: [{ id: "w3_dom", type: "gray", subj: "Descanso", desc: "Descanso" }] },
+
+    // SEMANA 04 - "O Paredão da Igualdade"
+    { date: "2026-02-23", week: 4, day: "Segunda", items: [{ id: "w4_seg_1", type: "fuchsia", subj: "Igualdade", desc: "Item 3: Est. Igualdade Racial (Lei 12.288/10)" }, { id: "w4_seg_2", type: "red", subj: "CF/88", desc: "Item 1: CF/88 Art. 1º ao 5º (Direitos Fundamentais)" }] },
+    { date: "2026-02-24", week: 4, day: "Terça", items: [{ id: "w4_ter_1", type: "fuchsia", subj: "Igualdade", desc: "Item 4: Est. Racial BA (Lei 13.182/14)" }, { id: "w4_ter_2", type: "fuchsia", subj: "Igualdade", desc: "Item 2: Const. BA Cap. XXIII 'Do Negro'" }] },
+    { date: "2026-02-25", week: 4, day: "Quarta", items: [{ id: "w4_qua_1", type: "red", subj: "Dir. Penal", desc: "Itens 5 e 12: Lei 7.716/89 e Lei Caó 7.437/85" }, { id: "w4_qua_2", type: "amber", subj: "História", desc: "Item 15: Lei 10.639/03 (História Afro)" }] },
+    { date: "2026-02-26", week: 4, day: "Quinta", items: [{ id: "w4_qui_1", type: "amber", subj: "História", desc: "Item 16: Lei 11.645/08 (História Indígena)" }, { id: "w4_qui_2", type: "sky", subj: "Intl", desc: "Item 6: Conv. Int. Elim. Discrim. Racial" }] },
+    { date: "2026-02-27", week: 4, day: "Sexta", items: [{ id: "w4_sex_1", type: "red", subj: "Dir. Penal", desc: "Itens 9 e 10: Injúria (CP) e Tortura (9.455/97)" }, { id: "w4_sex_2", type: "red", subj: "Dir. Penal", desc: "Item 11: Lei de Genocídio (2.889/56)" }] },
+    { date: "2026-02-28", week: 4, day: "Sábado", items: [{ id: "w4_sab", type: "orange", subj: "Revisão", desc: "INTENSIVO (4h): 50 Questões Legislação Racial/Humanos" }] },
+    { date: "2026-03-01", week: 4, day: "Domingo", items: [{ id: "w4_dom", type: "gray", subj: "Descanso", desc: "Descanso" }] },
+
+    // SEMANA 05
+    { date: "2026-03-02", week: 5, day: "Segunda", items: [{ id: "w5_seg_1", type: "rose", subj: "Gênero", desc: "Item 8: Lei Maria da Penha (11.340/06)" }, { id: "w5_seg_2", type: "sky", subj: "Intl", desc: "Item 7: Conv. Int. Elim. Discrim. Mulher" }] },
+    { date: "2026-03-03", week: 5, day: "Terça", items: [{ id: "w5_ter_1", type: "lime", subj: "Profissão", desc: "Item 2: Lei 4.769/65 (Téc. em Adm)" }, { id: "w5_ter_2", type: "lime", subj: "Profissão", desc: "Item 3: Formação (Dec. 5.154 e Res. CNE 6)" }] },
+    { date: "2026-03-04", week: 5, day: "Quarta", items: [{ id: "w5_qua_1", type: "slate", subj: "Info", desc: "Item 17: Informática (Gestão de arquivos/Pastas)" }, { id: "w5_qua_2", type: "purple", subj: "Lógica", desc: "Item 18: Lógica (Resolução de Provas Anteriores)" }] },
+    { date: "2026-03-05", week: 5, day: "Quinta", items: [{ id: "w5_qui_1", type: "blue", subj: "Geral", desc: "Português: Resolução de Provas Anteriores" }, { id: "w5_qui_2", type: "teal", subj: "Revisão", desc: "Revisão Cruzada: Leis da Mulher e Profissão" }] },
+    { date: "2026-03-06", week: 5, day: "Sexta", items: [{ id: "w5_sex_1", type: "violet", subj: "Contexto", desc: "Itens 2 e 3: Atualidades e Globalização" }, { id: "w5_sex_2", type: "gray", subj: "Livre", desc: "Tempo Livre: Tapar buracos de matérias atrasadas" }] },
+    { date: "2026-03-07", week: 5, day: "Sábado", items: [{ id: "w5_sab", type: "orange", subj: "Simulado", desc: "SIMULADO GERAL 1 (4h): Todas as matérias" }] },
+    { date: "2026-03-08", week: 5, day: "Domingo", items: [{ id: "w5_dom", type: "gray", subj: "Descanso", desc: "Descanso e Análise do Simulado" }] },
+
+    // --- FASE 3: POLIMENTO E RETA FINAL (Semanas 6 a 8) ---
+    // SEMANA 06 - Consolidação (1h Teoria + 3h Questões)
+    { date: "2026-03-09", week: 6, day: "Segunda", items: [{ id: "w6_seg_1", type: "red", subj: "Rev. Adm", desc: "Revisão: Direito Adm (Itens 4-6, 10-12)" }, { id: "w6_seg_2", type: "red", subj: "Guerra", desc: "Bateria de Questões: Administração Pública" }] },
+    { date: "2026-03-10", week: 6, day: "Terça", items: [{ id: "w6_ter_1", type: "pink", subj: "LDB", desc: "Revisão: LDB e Educação (Itens 1-3)" }, { id: "w6_ter_2", type: "pink", subj: "Guerra", desc: "Bateria de Questões: Legislação Educacional" }] },
+    { date: "2026-03-11", week: 6, day: "Quarta", items: [{ id: "w6_qua_1", type: "fuchsia", subj: "Igualdade", desc: "Revisão: Legislação Racial (Todos os itens)" }, { id: "w6_qua_2", type: "fuchsia", subj: "Guerra", desc: "Bateria de Questões: Igualdade Racial" }] },
+    { date: "2026-03-12", week: 6, day: "Quinta", items: [{ id: "w6_qui_1", type: "rose", subj: "Gênero", desc: "Revisão: Gênero e Direitos Humanos" }, { id: "w6_qui_2", type: "rose", subj: "Guerra", desc: "Bateria de Questões: Gênero e DH" }] },
+    { date: "2026-03-13", week: 6, day: "Sexta", items: [{ id: "w6_sex_1", type: "blue", subj: "Rev. Port", desc: "Revisão: Português (Pontos fracos)" }, { id: "w6_sex_2", type: "purple", subj: "Lógica", desc: "Revisão: Raciocínio Lógico (Item 18)" }] },
+    { date: "2026-03-14", week: 6, day: "Sábado", items: [{ id: "w6_sab", type: "orange", subj: "Simulado", desc: "Simulado Focado: Ênfase em Legislação Específica" }] },
+    { date: "2026-03-15", week: 6, day: "Domingo", items: [{ id: "w6_dom", type: "gray", subj: "Descanso", desc: "Descanso" }] },
+
+    // SEMANA 07 - "Semana de Guerra" (Meta: 50 Questões/dia)
+    { date: "2026-03-16", week: 7, day: "Segunda", items: [{ id: "w7_seg_1", type: "red", subj: "Guerra", desc: "Guerra: 50 Questões de Dir. Administrativo" }, { id: "w7_seg_2", type: "yellow", subj: "Guerra", desc: "Revisão Rápida: Leis Estaduais (BA)" }] },
+    { date: "2026-03-17", week: 7, day: "Terça", items: [{ id: "w7_ter_1", type: "pink", subj: "Guerra", desc: "Guerra: 50 Questões de Pedagogia/LDB" }, { id: "w7_ter_2", type: "cyan", subj: "Guerra", desc: "Revisão Rápida: ECA e Social" }] },
+    { date: "2026-03-18", week: 7, day: "Quarta", items: [{ id: "w7_qua_1", type: "fuchsia", subj: "Guerra", desc: "Guerra: 50 Questões de Igualdade/Racial" }, { id: "w7_qua_2", type: "rose", subj: "Guerra", desc: "Revisão Rápida: Penas e Prazos (Leis Penais)" }] },
+    { date: "2026-03-19", week: 7, day: "Quinta", items: [{ id: "w7_qui_1", type: "blue", subj: "Guerra", desc: "Guerra: 50 Questões de Português" }, { id: "w7_qui_2", type: "purple", subj: "Guerra", desc: "Revisão Rápida: Fórmulas de Lógica" }] },
+    { date: "2026-03-20", week: 7, day: "Sexta", items: [{ id: "w7_sex_1", type: "slate", subj: "Guerra", desc: "Guerra: Mix Específico (Info + Profissão)" }, { id: "w7_sex_2", type: "teal", subj: "Revisão", desc: "Revisão de Erros da Semana" }] },
+    { date: "2026-03-21", week: 7, day: "Sábado", items: [{ id: "w7_sab", type: "orange", subj: "Simulado", desc: "Simulado Cronometrado (Sem celular, apenas água e caneta)" }] },
+    { date: "2026-03-22", week: 7, day: "Domingo", items: [{ id: "w7_dom", type: "gray", subj: "Descanso", desc: "Descanso Obrigatório" }] },
+
+    // SEMANA 08 - "A Vitória"
+    { date: "2026-03-23", week: 8, day: "Segunda", items: [{ id: "w8_seg_1", type: "emerald", subj: "Lei Seca", desc: "Leitura Dinâmica: LDB e ECA" }, { id: "w8_seg_2", type: "teal", subj: "Revisão", desc: "Pontos Focais: Artigos mais cobrados" }] },
+    { date: "2026-03-24", week: 8, day: "Terça", items: [{ id: "w8_ter_1", type: "rose", subj: "Decoreba", desc: "Prazos e Penas: Igualdade Racial e Gênero" }, { id: "w8_ter_2", type: "teal", subj: "Revisão", desc: "Tabela de Crimes e Competências" }] },
+    { date: "2026-03-25", week: 8, day: "Quarta", items: [{ id: "w8_qua_1", type: "blue", subj: "Rev. Port", desc: "Português: Crase e Concordância (Dicas Finais)" }, { id: "w8_qua_2", type: "purple", subj: "Fórmulas", desc: "Lógica: Revisão de Fórmulas e Conectivos" }] },
+    { date: "2026-03-26", week: 8, day: "Quinta", items: [{ id: "w8_qui_1", type: "red", subj: "Rev. Adm", desc: "Adm. Pública: LIMPE e Estruturas (Revisão Leve)" }, { id: "w8_qui_2", type: "slate", subj: "Pré-Prova", desc: "Organização: Local de prova e material" }] },
+    { date: "2026-03-27", week: 8, day: "Sexta", items: [{ id: "w8_sex_1", type: "violet", subj: "Leve", desc: "Leitura Leve: Atualidades (Nada novo)" }, { id: "w8_sex_2", type: "slate", subj: "Pré-Prova", desc: "Verificar Documentos e Canetas" }] },
+    { date: "2026-03-28", week: 8, day: "Sábado", items: [{ id: "w8_sab", type: "slate", subj: "Descanso", desc: "Dia Off: Descanso ativo. O trabalho foi feito." }] },
+    { date: "2026-03-29", week: 8, day: "Domingo", items: [{ id: "w8_dom", type: "yellow", subj: "DIA DA PROVA", desc: "Boa Prova! Confie no seu processo." }] },
 ];
 
 const subjectMeta = {
@@ -75,15 +141,17 @@ const subjectMeta = {
     'DIA DA PROVA': { color: 'yellow', icon: '🏆' },
     'Descanso': { color: 'gray', icon: '💤' },
     'Rev. Adm': { color: 'red', icon: '🔄' },
-    'Rev. Port': { color: 'blue', icon: '🔄' }
+    'Rev. Port': { color: 'blue', icon: '🔄' },
+    'Livre': { color: 'gray', icon: '🆓' }
 };
 
+// Esta função transforma o scheduleData em itens da Biblioteca
 const syllabusDB = scheduleData.flatMap(day => 
     day.items.map(item => ({
         id: item.id,
         cat: item.subj,
         title: `${day.day} - ${item.desc}`,
-        text: `Conteúdo referente a ${item.subj}: ${item.desc}. Este tópico faz parte da ${day.week}ª semana de estudos. Foco total na resolução de questões e leitura da lei seca se aplicável.`
+        text: `Conteúdo referente a ${item.subj}: ${item.desc}. Este tópico faz parte da ${day.week}ª semana de estudos (Fase: ${day.week <= 2 ? 'Fundação' : day.week <= 5 ? 'Imersão Específica' : 'Polimento'}). Foco total na resolução de questões IBFC.`
     }))
 );
 

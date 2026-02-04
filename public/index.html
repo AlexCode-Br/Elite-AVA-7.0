@@ -9,16 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     
-    <!-- Bibliotecas Externas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
-    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -141,7 +138,6 @@
         .dark ::-webkit-scrollbar-thumb { background: #374151; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Mobile First Glass Panel adjustments */
         .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-right: 1px solid rgba(0,0,0,0.05); }
         .dark .glass-panel { background: rgba(14, 20, 33, 0.95); border-right: 1px solid rgba(255, 255, 255, 0.05); }
 
@@ -168,12 +164,9 @@
         .strength-segment { transition: all 0.3s ease; height: 4px; border-radius: 2px; background-color: #374151; }
         .strength-segment.active { background-color: #ef4444; box-shadow: 0 0 5px currentColor; }
 
-        /* Sidebar Transition Classes - Manipulated by JS */
         #main-sidebar { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        /* When open on mobile, remove -translate-x-full */
         .sidebar-open { transform: translateX(0) !important; }
 
-        /* Profile Tabs */
         .profile-tab { transition: all 0.2s; border-bottom: 2px solid transparent; color: #64748b; }
         .dark .profile-tab { color: #94a3b8; }
         .profile-tab.active { border-color: #2563eb; color: #2563eb; font-weight: 600; }
@@ -186,7 +179,6 @@
 
 <body class="bg-slate-50 dark:bg-dark-900 text-slate-800 dark:text-slate-100 h-[100dvh] flex overflow-hidden transition-colors duration-300">
 
-    <!-- LOGIN OVERLAY -->
     <div id="login-overlay" class="fixed inset-0 z-[100] bg-dark-900 flex items-center justify-center p-4 transition-opacity duration-500 overflow-y-auto">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute -top-20 -left-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
@@ -316,18 +308,13 @@
         </div>
     </div>
 
-    <!-- MOBILE OVERLAY & SIDEBAR -->
-    <!-- Mobile Backdrop -->
     <div id="mobile-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden transition-opacity md:hidden" onclick="toggleSidebar()"></div>
     
-    <!-- Sidebar: Fixed, Mobile Hidden (-translate-x-full), Desktop Visible (translate-x-0) -->
     <aside id="main-sidebar" class="glass-panel w-72 md:w-64 flex flex-col z-50 h-full fixed top-0 left-0 bg-white dark:bg-dark-800 border-r border-slate-200 dark:border-white/5 shadow-2xl md:shadow-none -translate-x-full md:translate-x-0 group">
-        <!-- Close Button Mobile -->
         <button onclick="toggleSidebar()" class="absolute top-4 right-4 md:hidden text-slate-500 hover:text-white p-2">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
-        <!-- Desktop Minimize Button (Hidden on Mobile) -->
         <button onclick="toggleSidebarDesktop()" class="absolute -right-3 top-20 bg-white dark:bg-dark-800 border border-slate-200 dark:border-white/10 rounded-full p-1.5 shadow-md z-50 hidden md:flex items-center justify-center text-slate-500 hover:text-blue-500 transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
         </button>
@@ -365,7 +352,6 @@
             </div>
         </nav>
         
-        <!-- Sidebar Footer: Theme Toggle -->
         <div class="p-4 border-t border-slate-200 dark:border-white/5">
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 px-2 nav-label">Aparência</p>
             <div class="flex bg-slate-100 dark:bg-black/20 p-1 rounded-xl nav-label">
@@ -382,13 +368,10 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT - Mobile First: ml-0, Desktop: ml-64 -->
     <main class="flex-1 flex flex-col h-[100dvh] overflow-hidden relative ml-0 md:ml-64 transition-all duration-300">
         
-        <!-- HEADER -->
         <header class="h-16 md:h-20 px-4 md:px-8 bg-white/80 dark:bg-dark-900/90 backdrop-blur-md z-30 shrink-0 border-b border-slate-200 dark:border-white/5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- Hamburger Menu Mobile -->
                 <button onclick="toggleSidebar()" class="md:hidden text-slate-600 dark:text-white p-2 -ml-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
                 </button>
@@ -400,9 +383,7 @@
                 </div>
             </div>
 
-            <!-- GAMIFICATION HUD -->
             <div class="flex items-center gap-3 md:gap-6">
-                <!-- XP Bar - Hidden on small mobile -->
                 <div class="hidden sm:block w-32 md:w-48">
                     <div class="flex justify-between text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1">
                         <span>XP ATUAL</span>
@@ -429,12 +410,9 @@
             </div>
         </header>
 
-        <!-- SCROLLABLE CONTENT -->
         <div class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-slate-50 dark:bg-dark-900 transition-colors" id="main-scroll">
             
-            <!-- DASHBOARD VIEW -->
             <div id="view-dashboard" class="w-full space-y-6 md:space-y-8 fade-in text-left pb-20">
-                <!-- Main Stats Cards: Grid 1 -> 3 -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="col-span-1 bg-white dark:bg-dark-800 rounded-3xl p-6 border border-slate-100 dark:border-white/5 shadow-lg relative overflow-hidden group hover-card">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
@@ -456,7 +434,6 @@
                         </div>
                     </div>
 
-                    <!-- Daily Mission Progress Card: Col 1 -> 2 -->
                     <div class="col-span-1 md:col-span-2 bg-gradient-to-br from-indigo-900 to-dark-900 rounded-3xl p-1 border border-white/10 shadow-lg relative overflow-hidden group hover-card">
                         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
                         <div class="bg-dark-900/40 backdrop-blur-sm h-full rounded-[20px] p-6 relative z-10 flex flex-col justify-between">
@@ -467,7 +444,6 @@
                                         <span class="text-xs text-white/70 font-bold" id="daily-progress-text">0/0 Completas</span>
                                     </div>
                                     <h3 class="text-2xl font-display font-bold text-white mb-2 leading-tight">Objetivos de Hoje</h3>
-                                    <!-- Barra de progresso diário -->
                                     <div class="w-full h-4 bg-black/50 rounded-full overflow-hidden border border-white/10 relative">
                                         <div id="daily-progress-bar" class="h-full bg-gradient-to-r from-neon-green to-emerald-600 w-0 transition-all duration-700"></div>
                                     </div>
@@ -484,7 +460,6 @@
                     </div>
                 </div>
 
-                <!-- Calendar & Tasks Section -->
                 <div class="bg-white dark:bg-dark-800 rounded-3xl p-4 md:p-6 border border-slate-100 dark:border-white/5 shadow-lg">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                         <h3 class="font-display font-bold text-xl text-slate-800 dark:text-white flex items-center gap-2">
@@ -513,7 +488,6 @@
                     </div>
 
                     <div id="task-section">
-                        <!-- AI INTEL CARD -->
                         <div class="mb-8 border border-slate-200 dark:border-neon-purple/30 bg-white dark:bg-dark-900/80 rounded-2xl overflow-hidden shadow-lg dark:shadow-[0_0_20px_rgba(188,19,254,0.1)] relative group transition-colors">
                             <div class="bg-slate-50 dark:bg-gradient-to-r dark:from-neon-purple/20 dark:to-transparent p-4 border-b border-slate-100 dark:border-white/5 flex justify-between items-center relative overflow-hidden">
                                 <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10"></div>
@@ -546,7 +520,6 @@
                 </div>
             </div>
 
-            <!-- LIBRARY VIEW -->
             <div id="view-library" class="hidden w-full fade-in pb-20">
                 <div class="bg-white dark:bg-dark-800 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-white/5 mb-8">
                     <h2 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white mb-2">Biblioteca</h2>
@@ -555,8 +528,7 @@
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="relative w-full md:w-64">
                             <select id="library-filter-select" onchange="setLibraryFilter(this.value)" class="w-full appearance-none bg-slate-50 dark:bg-dark-900 border-2 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:border-blue-500 dark:focus:border-neon-blue transition-colors cursor-pointer font-bold text-sm min-h-[44px]">
-                                <!-- Populated by JS -->
-                            </select>
+                                </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                             </div>
@@ -568,26 +540,20 @@
                         </div>
                     </div>
                 </div>
-                <!-- Library Grid: 1 -> 2 -> 3 -->
                 <div id="library-results" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    <!-- Library Items -->
-                </div>
+                    </div>
             </div>
 
-            <!-- ACHIEVEMENTS VIEW -->
             <div id="view-achievements" class="hidden w-full fade-in pb-20">
                 <div class="bg-gradient-to-r from-yellow-600 to-yellow-800 p-6 md:p-8 rounded-3xl text-white mb-8 shadow-lg relative overflow-hidden">
                     <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
                     <h2 class="text-2xl md:text-3xl font-display font-bold relative z-10">Quadro de Medalhas</h2>
                     <p class="text-yellow-100 relative z-10 text-sm md:text-base">Acompanhe seus marcos de aprendizado.</p>
                 </div>
-                <!-- Achievements Grid: 2 -> 4 -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" id="achievements-grid">
-                    <!-- Injected via JS -->
-                </div>
+                    </div>
             </div>
 
-            <!-- SCHEDULE VIEW -->
             <div id="view-schedule" class="hidden w-full fade-in pb-20">
                 <div class="mb-8">
                     <h2 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white">Jornada</h2>
@@ -597,12 +563,10 @@
                 <div class="relative flex flex-col gap-8 pb-12">
                     <div class="absolute left-[1.4rem] top-0 bottom-0 w-1 bg-slate-200 dark:bg-white/5 rounded-full"></div>
                     <div id="full-schedule-container" class="space-y-8">
-                        <!-- Filled by JS -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- EDITAL & CHAT VIEW: Col (Mobile) -> Row (Desktop) -->
             <div id="view-edital" class="hidden w-full h-full flex flex-col md:flex-row gap-6 fade-in pb-4">
                 <div class="w-full md:w-1/2 bg-white dark:bg-dark-800 rounded-3xl border border-slate-200 dark:border-white/5 overflow-hidden flex flex-col h-[40vh] md:h-auto min-h-[300px]">
                     <div class="p-4 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50 dark:bg-dark-900">
@@ -634,7 +598,6 @@
                 </div>
             </div>
 
-            <!-- ANALYTICS VIEW -->
             <div id="view-stats" class="hidden w-full fade-in pb-20 space-y-8">
                 <div class="flex flex-col md:flex-row justify-between items-end gap-4 mb-2">
                     <div>
@@ -643,7 +606,6 @@
                     </div>
                 </div>
 
-                <!-- Stats Grid: 1 -> 3 -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="bg-white dark:bg-dark-800 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm relative overflow-hidden group">
@@ -677,7 +639,6 @@
 
                     <div class="col-span-1 bg-white dark:bg-dark-800 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm flex flex-col">
                         <h3 class="font-bold text-slate-800 dark:text-white mb-4 text-sm uppercase tracking-wider">Radar</h3>
-                        <!-- Wrapper for responsive chart height -->
                         <div class="flex-1 relative min-h-[250px] lg:min-h-0">
                             <canvas id="subjectChart"></canvas>
                         </div>
@@ -691,7 +652,6 @@
                         <div class="text-xs text-slate-400 font-mono">Registro Cronológico</div>
                     </div>
                     
-                    <!-- Table horizontal scroll wrapper -->
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[500px]">
                             <thead>
@@ -713,7 +673,6 @@
         </div>
     </main>
 
-    <!-- CONTENT MODAL: w-[95%] on mobile -->
     <div id="content-modal" class="fixed inset-0 z-[150] hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         <div class="bg-white dark:bg-dark-800 w-[95%] md:w-full md:max-w-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-white/10 flex flex-col max-h-[90vh] overflow-hidden animate-slide-up">
             <div class="p-4 md:p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-start bg-slate-50 dark:bg-dark-900">
@@ -746,7 +705,6 @@
         </div>
     </div>
 
-    <!-- FULLSCREEN PDF MODAL -->
     <div id="pdf-modal" class="fixed inset-0 z-[200] hidden bg-dark-900 flex flex-col animate-in fade-in zoom-in duration-200">
         <div class="flex items-center justify-between p-4 border-b border-white/10 bg-dark-800 shrink-0">
             <h3 class="font-bold text-white flex items-center gap-2">
@@ -762,7 +720,6 @@
         </div>
     </div>
 
-    <!-- ACHIEVEMENT TOAST -->
     <div id="achievement-toast" class="fixed top-20 right-4 z-[150] translate-x-full transition-transform duration-500 flex items-center gap-4 bg-white dark:bg-dark-800 border border-yellow-400/50 dark:border-neon-gold/50 p-4 rounded-xl shadow-2xl max-w-[90vw]">
         <div class="w-10 h-10 rounded-full bg-yellow-100 dark:bg-neon-gold/20 flex items-center justify-center text-xl text-yellow-600 dark:text-neon-gold shrink-0">🏅</div>
         <div>
@@ -771,7 +728,6 @@
         </div>
     </div>
 
-    <!-- LEVEL UP OVERLAY -->
     <div id="level-up-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
         <div class="relative bg-white dark:bg-dark-800 p-8 rounded-3xl border border-slate-200 dark:border-neon-purple text-center animate-level-up shadow-2xl w-full max-w-sm mx-auto overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
@@ -803,11 +759,9 @@
         </div>
     </div>
 
-    <!-- PROFILE MODAL -->
     <div id="profile-modal" class="fixed inset-0 z-[180] hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
         <div class="bg-white dark:bg-dark-900 w-full max-w-lg h-[85vh] rounded-3xl shadow-2xl border border-slate-200 dark:border-white/10 flex flex-col overflow-hidden animate-slide-up relative">
             
-            <!-- Header do Modal -->
             <div class="p-6 bg-slate-50 dark:bg-dark-800 border-b border-slate-100 dark:border-white/5 relative">
                 <button onclick="closeProfileModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 p-2">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -818,15 +772,11 @@
                         <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg overflow-hidden border-4 border-white dark:border-dark-900">
                             <span id="profile-avatar-char">E</span>
                         </div>
-                        <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white" id="profile-name-display">Estudante</h3>
                     <p class="text-sm text-slate-500 dark:text-slate-400" id="profile-email-display">email@exemplo.com</p>
                 </div>
 
-                <!-- Abas -->
                 <div class="flex mt-6 border-b border-slate-200 dark:border-white/10">
                     <button onclick="switchProfileTab('personal')" class="profile-tab active flex-1 pb-3 text-sm font-medium text-center" id="tab-btn-personal">Perfil</button>
                     <button onclick="switchProfileTab('security')" class="profile-tab flex-1 pb-3 text-sm font-medium text-center" id="tab-btn-security">Segurança</button>
@@ -834,10 +784,7 @@
                 </div>
             </div>
 
-            <!-- Conteúdo das Abas -->
             <div class="flex-1 overflow-y-auto p-6 bg-white dark:bg-dark-900">
-                
-                <!-- Aba: Dados Pessoais -->
                 <div id="tab-content-personal" class="space-y-6">
                     <div>
                         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Nome de Exibição</label>
@@ -860,7 +807,6 @@
                     </div>
                 </div>
 
-                <!-- Aba: Segurança -->
                 <div id="tab-content-security" class="hidden space-y-6">
                     <div>
                         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">E-mail de Acesso</label>
@@ -877,7 +823,6 @@
                     </div>
                 </div>
 
-                <!-- Aba: Jornada (Conquistas) -->
                 <div id="tab-content-journey" class="hidden space-y-6">
                     <div class="flex gap-4">
                         <div class="flex-1 bg-slate-50 dark:bg-dark-800 p-3 rounded-xl border border-slate-200 dark:border-white/5 text-center">
@@ -893,14 +838,12 @@
                     <div>
                         <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Próximos Passos</h4>
                         <div class="space-y-0 relative pl-4 border-l-2 border-slate-200 dark:border-white/10" id="profile-next-levels">
-                            <!-- Populated via JS -->
-                        </div>
+                            </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Footer do Modal -->
             <div class="p-4 border-t border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-dark-800">
                 <button onclick="handleLogout()" class="w-full py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-bold rounded-xl hover:bg-red-100 dark:hover:bg-red-900/30 transition text-sm flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -910,9 +853,7 @@
         </div>
     </div>
 
-    <!-- LOGIC -->
     <script>
-        // --- CONSTANTS ---
         const XP_PER_TASK = 150;
         const XP_PER_LEVEL = 350;
         const XP_LOGIN_BONUS = 50;
@@ -940,8 +881,8 @@
         ];
 
         // --- FULL SCHEDULE DATA ---
-        // (Mantendo dados originais)
         const scheduleData = [
+            // SEMANA 1
             { date: "2026-02-02", week: 1, day: "Segunda", items: [{ id: "s1_seg_1", type: "red", subj: "Dir. Adm", desc: "Item 4: Lei 9.784/99 (Processo Adm e Órgãos)" }, { id: "s1_seg_2", type: "blue", subj: "Português", desc: "Itens 1 e 2: Leitura, Interpretação e Tipologia" }] },
             { date: "2026-02-03", week: 1, day: "Terça", items: [{ id: "s1_ter_1", type: "red", subj: "Dir. Adm", desc: "Item 10: Dec-Lei 200/67 (Org. Federal)" }, { id: "s1_ter_2", type: "gray", subj: "Lógica", desc: "Item 18: Estruturas Lógicas e Diagramas" }] },
             { date: "2026-02-04", week: 1, day: "Quarta", items: [{ id: "s1_qua_1", type: "red", subj: "Adm. Púb", desc: "Item 5: Agentes Públicos (Cargos e Funções)" }, { id: "s1_qua_2", type: "blue", subj: "Português", desc: "Item 3: Semântica e Significação das Palavras" }] },
@@ -949,7 +890,69 @@
             { date: "2026-02-06", week: 1, day: "Sexta", items: [{ id: "s1_sex_1", type: "green", subj: "Gestão", desc: "Item 11: Dec. 9.739/19 (Eficiência/Inovação)" }, { id: "s1_sex_2", type: "red", subj: "Const.", desc: "Item 6: Princípios LIMPE + Questões" }] },
             { date: "2026-02-07", week: 1, day: "Sábado", items: [{ id: "s1_sab", type: "orange", subj: "Revisão", desc: "Resumo Geral + 40 Questões IBFC" }] },
             { date: "2026-02-08", week: 1, day: "Domingo", items: [{ id: "s1_dom", type: "gray", subj: "Descanso", desc: "Descanso Estratégico e Mental" }] },
+            
+            // SEMANA 2
             { date: "2026-02-09", week: 2, day: "Segunda", items: [{ id: "s2_seg_1", type: "red", subj: "CF/88", desc: "Itens 7 e 15: Educação na CF + Dir. Subjetivo" }, { id: "s2_seg_2", type: "blue", subj: "Português", desc: "Item 4: Pontuação e Sinais Gráficos" }] },
+            { date: "2026-02-10", week: 2, day: "Terça", items: [{ id: "s2_ter_1", type: "pink", subj: "LDB", desc: "Item 13: LDB (Sistemas de Ensino)" }, { id: "s2_ter_2", type: "purple", subj: "Lógica", desc: "Item 18: Argumentação e Dedução" }] },
+            { date: "2026-02-11", week: 2, day: "Quarta", items: [{ id: "s2_qua_1", type: "pink", subj: "LDB", desc: "Item 1: LDB (Diretrizes Nacionais)" }, { id: "s2_qua_2", type: "pink", subj: "Pedagogia", desc: "Item 3: Projeto Político Pedagógico (PPP)" }] },
+            { date: "2026-02-12", week: 2, day: "Quinta", items: [{ id: "s2_qui_1", type: "pink", subj: "Pedagogia", desc: "Item 2: Concepção Histórico-Crítica da Educação" }, { id: "s2_qui_2", type: "pink", subj: "LDB", desc: "Item 16: Resoluções CNE (Diretrizes/Supervisão)" }] },
+            { date: "2026-02-13", week: 2, day: "Sexta", items: [{ id: "s2_sex_1", type: "pink", subj: "LDB", desc: "Item 1: Res. CNE/CP 1/2021 (Diretrizes EPT)" }, { id: "s2_sex_2", type: "blue", subj: "Português", desc: "Itens 1-4: Sintaxe Básica Aplicada ao Texto" }] },
+            { date: "2026-02-14", week: 2, day: "Sábado", items: [{ id: "s2_sab", type: "orange", subj: "Revisão", desc: "LDB + PPP + Mapa Mental da Educação" }] },
+            { date: "2026-02-15", week: 2, day: "Domingo", items: [{ id: "s2_dom", type: "gray", subj: "Descanso", desc: "Descanso Estratégico" }] },
+
+            // SEMANA 3
+            { date: "2026-02-16", week: 3, day: "Segunda", items: [{ id: "s3_seg_1", type: "cyan", subj: "ECA", desc: "Item 14: ECA (Direito à Educação)" }, { id: "s3_seg_2", type: "indigo", subj: "Social", desc: "Item 4: Índices de Pobreza e Projetos Sociais" }] },
+            { date: "2026-02-17", week: 3, day: "Terça", items: [{ id: "s3_ter_1", type: "indigo", subj: "Social", desc: "Item 4: Dec. BA 12.830/11 (Pobreza)" }, { id: "s3_ter_2", type: "purple", subj: "Lógica", desc: "Item 18: Lógica Espacial e Temporal" }] },
+            { date: "2026-02-18", week: 3, day: "Quarta", items: [{ id: "s3_qua_1", type: "indigo", subj: "Social", desc: "Itens 5, 7 e 8: Dec. 4.564, Res. 01/21 e 03/25" }, { id: "s3_qua_2", type: "indigo", subj: "Social", desc: "Item 6: Lei 14.945/24 + Revisão ECA" }] },
+            { date: "2026-02-19", week: 3, day: "Quinta", items: [{ id: "s3_qui_1", type: "teal", subj: "Rev. Adm", desc: "Revisão Ativa: Direito Adm (Conteúdo Sem 1)" }, { id: "s3_qui_2", type: "blue", subj: "Rev. Port", desc: "Revisão Ativa: Português (Refazer erros)" }] },
+            { date: "2026-02-20", week: 3, day: "Sexta", items: [{ id: "s3_sex_1", type: "violet", subj: "Contexto", desc: "Itens 1 e 4: Realidade BR e Desafios Educ." }, { id: "s3_sex_2", type: "purple", subj: "Lógica", desc: "Item 18: Treino de Psicotécnico" }] },
+            { date: "2026-02-21", week: 3, day: "Sábado", items: [{ id: "s3_sab", type: "orange", subj: "Simulado", desc: "SIMULADO PARCIAL (4h): Adm + LDB + Português" }] },
+            { date: "2026-02-22", week: 3, day: "Domingo", items: [{ id: "s3_dom", type: "gray", subj: "Descanso", desc: "Descanso e Análise do Simulado" }] },
+
+            // SEMANA 4
+            { date: "2026-02-23", week: 4, day: "Segunda", items: [{ id: "s4_seg_1", type: "fuchsia", subj: "Igualdade", desc: "Item 3: Est. Igualdade Racial (Lei 12.288/10)" }, { id: "s4_seg_2", type: "red", subj: "CF/88", desc: "Item 1: CF/88 Art. 1º ao 5º (Direitos Fundamentais)" }] },
+            { date: "2026-02-24", week: 4, day: "Terça", items: [{ id: "s4_ter_1", type: "fuchsia", subj: "Igualdade", desc: "Item 4: Est. Racial BA (Lei 13.182/14)" }, { id: "s4_ter_2", type: "fuchsia", subj: "Igualdade", desc: "Itens 5 e 12: Lei 7.716/89 e Lei Caó 7.437/85" }] },
+            { date: "2026-02-25", week: 4, day: "Quarta", items: [{ id: "s4_qua_1", type: "amber", subj: "História", desc: "Item 15: Lei 10.639/03 (História Afro)" }, { id: "s4_qua_2", type: "fuchsia", subj: "Const. BA", desc: "Item 2: Const. BA Cap. XXIII 'Do Negro'" }] },
+            { date: "2026-02-26", week: 4, day: "Quinta", items: [{ id: "s4_qui_1", type: "amber", subj: "História", desc: "Item 16: Lei 11.645/08 (História Indígena)" }, { id: "s4_qui_2", type: "sky", subj: "Intl", desc: "Item 6: Conv. Int. Elim. Discrim. Racial" }] },
+            { date: "2026-02-27", week: 4, day: "Sexta", items: [{ id: "s4_sex_1", type: "red", subj: "Dir. Penal", desc: "Itens 9 e 10: Injúria (CP) e Tortura (9.455/97)" }, { id: "s4_sex_2", type: "red", subj: "Dir. Penal", desc: "Item 11: Lei de Genocídio (2.889/56)" }] },
+            { date: "2026-02-28", week: 4, day: "Sábado", items: [{ id: "s4_sab", type: "orange", subj: "Intensivo", desc: "INTENSIVO (4h): 50 Questões só sobre Legislação Racial/Humanos" }] },
+            { date: "2026-03-01", week: 4, day: "Domingo", items: [{ id: "s4_dom", type: "gray", subj: "Descanso", desc: "Descanso Mental" }] },
+
+            // SEMANA 5
+            { date: "2026-03-02", week: 5, day: "Segunda", items: [{ id: "s5_seg_1", type: "rose", subj: "Gênero", desc: "Item 8: Lei Maria da Penha (11.340/06)" }, { id: "s5_seg_2", type: "sky", subj: "Intl", desc: "Item 7: Conv. Int. Elim. Discrim. Mulher" }] },
+            { date: "2026-03-03", week: 5, day: "Terça", items: [{ id: "s5_ter_1", type: "lime", subj: "Profissão", desc: "Item 2: Lei 4.769/65 (Téc. em Adm)" }, { id: "s5_ter_2", type: "lime", subj: "Profissão", desc: "Item 3: Formação (Dec. 5.154 e Res. CNE 6)" }] },
+            { date: "2026-03-04", week: 5, day: "Quarta", items: [{ id: "s5_qua_1", type: "purple", subj: "Lógica", desc: "Item 18: Lógica (Provas Anteriores IBFC)" }, { id: "s5_qua_2", type: "slate", subj: "Info", desc: "Item 17: Informática (Gestão de arquivos)" }] },
+            { date: "2026-03-05", week: 5, day: "Quinta", items: [{ id: "s5_qui_1", type: "blue", subj: "Geral", desc: "Português (Provas Anteriores)" }, { id: "s5_qui_2", type: "rose", subj: "Revisão", desc: "Leis da Mulher e Profissão" }] },
+            { date: "2026-03-06", week: 5, day: "Sexta", items: [{ id: "s5_sex_1", type: "violet", subj: "Contexto", desc: "Itens 2 e 3: Atualidades/Globalização" }, { id: "s5_sex_2", type: "gray", subj: "Livre", desc: "Tapar buracos de matérias atrasadas" }] },
+            { date: "2026-03-07", week: 5, day: "Sábado", items: [{ id: "s5_sab", type: "orange", subj: "Simulado", desc: "SIMULADO GERAL 1 (4h): Todas as matérias" }] },
+            { date: "2026-03-08", week: 5, day: "Domingo", items: [{ id: "s5_dom", type: "gray", subj: "Descanso", desc: "Descanso Ativo" }] },
+
+            // SEMANA 6
+            { date: "2026-03-09", week: 6, day: "Segunda", items: [{ id: "s6_seg_1", type: "teal", subj: "Rev. Adm", desc: "Direito Administrativo (Itens 4-6, 10-12)" }, { id: "s6_seg_2", type: "teal", subj: "Rev. LDB", desc: "LDB (Itens 1-3)" }] },
+            { date: "2026-03-10", week: 6, day: "Terça", items: [{ id: "s6_ter_1", type: "teal", subj: "Rev. Adm", desc: "Direito Administrativo (Itens 4-6, 10-12) - Parte 2" }, { id: "s6_ter_2", type: "teal", subj: "Rev. LDB", desc: "LDB (Itens 1-3) - Questões" }] },
+            { date: "2026-03-11", week: 6, day: "Quarta", items: [{ id: "s6_qua_1", type: "rose", subj: "Rev. Racial", desc: "Legislação Racial (Todos os itens)" }, { id: "s6_qua_2", type: "rose", subj: "Rev. Gênero", desc: "Legislação de Gênero (Todos os itens)" }] },
+            { date: "2026-03-12", week: 6, day: "Quinta", items: [{ id: "s6_qui_1", type: "rose", subj: "Rev. Racial", desc: "Legislação Racial - Questões" }, { id: "s6_qui_2", type: "rose", subj: "Rev. Gênero", desc: "Legislação de Gênero - Questões" }] },
+            { date: "2026-03-13", week: 6, day: "Sexta", items: [{ id: "s6_sex_1", type: "blue", subj: "Rev. Port", desc: "Revisão Português (Foco IBFC)" }, { id: "s6_sex_2", type: "purple", subj: "Rev. Lógica", desc: "Revisão Lógica (Item 18)" }] },
+            { date: "2026-03-14", week: 6, day: "Sábado", items: [{ id: "s6_sab", type: "blue", subj: "Rev. Port", desc: "Bateria Português" }, { id: "s6_sab_2", type: "purple", subj: "Rev. Lógica", desc: "Bateria Lógica" }] },
+            { date: "2026-03-15", week: 6, day: "Domingo", items: [{ id: "s6_dom", type: "gray", subj: "Descanso", desc: "Recuperação Mental" }] },
+
+            // SEMANA 7 - SEMANA DE GUERRA
+            { date: "2026-03-16", week: 7, day: "Segunda", items: [{ id: "s7_seg_1", type: "orange", subj: "Guerra", desc: "Bateria 50 Questões: Adm + LDB" }, { id: "s7_seg_2", type: "emerald", subj: "Lei Seca", desc: "Leitura da Lei Seca (Adm)" }] },
+            { date: "2026-03-17", week: 7, day: "Terça", items: [{ id: "s7_ter_1", type: "orange", subj: "Guerra", desc: "Bateria 50 Questões: Igualdade + Gênero" }, { id: "s7_ter_2", type: "emerald", subj: "Lei Seca", desc: "Leitura da Lei Seca (Racial/Gênero)" }] },
+            { date: "2026-03-18", week: 7, day: "Quarta", items: [{ id: "s7_qua_1", type: "orange", subj: "Guerra", desc: "Bateria 50 Questões: Português + Lógica" }, { id: "s7_qua_2", type: "emerald", subj: "Lei Seca", desc: "Revisão de Fórmulas Lógicas" }] },
+            { date: "2026-03-19", week: 7, day: "Quinta", items: [{ id: "s7_qui_1", type: "orange", subj: "Guerra", desc: "Bateria 50 Questões: Conhecimentos Gerais" }, { id: "s7_qui_2", type: "emerald", subj: "Lei Seca", desc: "Leitura da Lei Seca (ECA/LDB)" }] },
+            { date: "2026-03-20", week: 7, day: "Sexta", items: [{ id: "s7_sex_1", type: "orange", subj: "Guerra", desc: "Bateria 50 Questões: Mistas Difíceis" }, { id: "s7_sex_2", type: "emerald", subj: "Lei Seca", desc: "Pontos Fracos" }] },
+            { date: "2026-03-21", week: 7, day: "Sábado", items: [{ id: "s7_sab", type: "orange", subj: "Simulado", desc: "SIMULADO CRONOMETRADO (Sem celular, apenas água e caneta)" }] },
+            { date: "2026-03-22", week: 7, day: "Domingo", items: [{ id: "s7_dom", type: "gray", subj: "Descanso", desc: "Descanso Absoluto" }] },
+
+            // SEMANA 8 - A VITÓRIA
+            { date: "2026-03-23", week: 8, day: "Segunda", items: [{ id: "s8_seg_1", type: "emerald", subj: "Lei Seca", desc: "Revisão LDB e ECA (Leitura dinâmica da lei seca)" }, { id: "s8_seg_2", type: "rose", subj: "Decoreba", desc: "Prazos e Números Importantes" }] },
+            { date: "2026-03-24", week: 8, day: "Terça", items: [{ id: "s8_ter_1", type: "fuchsia", subj: "Decoreba", desc: "Revisão Igualdade Racial/Gênero (Prazos e Penas)" }, { id: "s8_ter_2", type: "emerald", subj: "Lei Seca", desc: "Leis 10.639 e 11.645" }] },
+            { date: "2026-03-25", week: 8, day: "Quarta", items: [{ id: "s8_qua_1", type: "blue", subj: "Rev. Port", desc: "Português (Crase/Concordância)" }, { id: "s8_qua_2", type: "indigo", subj: "Fórmulas", desc: "Lógica (Revisão Final de Fórmulas)" }] },
+            { date: "2026-03-26", week: 8, day: "Quinta", items: [{ id: "s8_qui_1", type: "red", subj: "Rev. Adm", desc: "Adm. Pública (LIMPE e Estruturas)" }, { id: "s8_qui_2", type: "emerald", subj: "Lei Seca", desc: "Constituição Federal (Art 5º)" }] },
+            { date: "2026-03-27", week: 8, day: "Sexta", items: [{ id: "s8_sex_1", type: "slate", subj: "Leve", desc: "Leitura leve de Atualidades. Nada novo." }, { id: "s8_sex_2", type: "slate", subj: "Pré-Prova", desc: "Organizar material, local de prova e canetas." }] },
+            { date: "2026-03-28", week: 8, day: "Sábado", items: [{ id: "s8_sab", type: "gray", subj: "Descanso", desc: "Descanso ativo. O trabalho foi feito." }] },
+            { date: "2026-03-29", week: 8, day: "Domingo", items: [{ id: "s8_dom", type: "yellow", subj: "DIA DA PROVA", desc: "Boa sorte! Você está preparado." }] }
         ];
 
         const subjectMeta = {
@@ -985,7 +988,14 @@
             'DIA DA PROVA': { color: 'yellow', icon: '🏆' },
             'Descanso': { color: 'gray', icon: '💤' },
             'Rev. Adm': { color: 'red', icon: '🔄' },
-            'Rev. Port': { color: 'blue', icon: '🔄' }
+            'Rev. Port': { color: 'blue', icon: '🔄' },
+            'Rev. LDB': { color: 'pink', icon: '🔄' },
+            'Rev. Racial': { color: 'fuchsia', icon: '🔄' },
+            'Rev. Gênero': { color: 'rose', icon: '🔄' },
+            'Rev. Lógica': { color: 'purple', icon: '🔄' },
+            'Const. BA': { color: 'yellow', icon: '📜' },
+            'Livre': { color: 'gray', icon: '🆓' },
+            'Intensivo': { color: 'orange', icon: '🔥' }
         };
 
         const syllabusDB = scheduleData.flatMap(day => 
@@ -1011,7 +1021,6 @@
         let isRegistering = false;
         let currentUserObject = null;
 
-        // ... (Auth helpers keep same logic) ...
         window.togglePasswordVisibility = () => {
             const input = document.getElementById('auth-password');
             const eyeIcon = document.getElementById('eye-icon');
@@ -1194,12 +1203,10 @@
             currentUser = user.uid;
             currentUserObject = user;
             
-            // UI Updates from Login
             const name = user.displayName ? user.displayName.split(' ')[0] : 'Estudante';
             document.getElementById('header-name').innerText = name;
             document.getElementById('profile-avatar-char').innerText = (user.displayName || 'E').charAt(0).toUpperCase();
             
-            // Populate Modal Data
             document.getElementById('profile-name-display').innerText = user.displayName || 'Estudante';
             document.getElementById('profile-email-display').innerText = user.email || 'Convidado';
             document.getElementById('edit-profile-name').value = user.displayName || '';
@@ -1247,7 +1254,6 @@
             window.searchContent();
             updateChartTheme();
             
-            // Load Theme Preference
             const savedTheme = localStorage.getItem('theme') || 'system';
             setTheme(savedTheme);
         }
@@ -1567,7 +1573,6 @@
             document.getElementById('xp-bar').style.width = `${progressPercent}%`;
             document.getElementById('xp-text').innerText = `${xpInLevel} / ${XP_PER_LEVEL} XP`;
             document.getElementById('level-circle').innerText = level;
-            // Removed: document.getElementById('player-level-badge').innerText = `Nível ${level}`;
             
             const computedStats = calculateStats();
             document.getElementById('stat-xp').innerText = totalXP.toLocaleString();
@@ -1685,9 +1690,24 @@
                 'yellow': 'text-yellow-700 bg-yellow-100 dark:text-yellow-300 dark:bg-yellow-900/30',
                 'orange': 'text-orange-700 bg-orange-100 dark:text-orange-300 dark:bg-orange-900/30',
                 'gray': 'text-gray-700 bg-gray-100 dark:text-gray-300 dark:bg-gray-800',
+                'pink': 'text-pink-700 bg-pink-100 dark:text-pink-300 dark:bg-pink-900/30',
+                'cyan': 'text-cyan-700 bg-cyan-100 dark:text-cyan-300 dark:bg-cyan-900/30',
+                'indigo': 'text-indigo-700 bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-900/30',
+                'fuchsia': 'text-fuchsia-700 bg-fuchsia-100 dark:text-fuchsia-300 dark:bg-fuchsia-900/30',
+                'rose': 'text-rose-700 bg-rose-100 dark:text-rose-300 dark:bg-rose-900/30',
+                'lime': 'text-lime-700 bg-lime-100 dark:text-lime-300 dark:bg-lime-900/30',
+                'amber': 'text-amber-700 bg-amber-100 dark:text-amber-300 dark:bg-amber-900/30',
+                'sky': 'text-sky-700 bg-sky-100 dark:text-sky-300 dark:bg-sky-900/30',
+                'teal': 'text-teal-700 bg-teal-100 dark:text-teal-300 dark:bg-teal-900/30',
+                'emerald': 'text-emerald-700 bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-900/30',
+                'violet': 'text-violet-700 bg-violet-100 dark:text-violet-300 dark:bg-violet-900/30',
+                'slate': 'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-900/30'
             };
-            if(c === 'emerald' || c === 'teal') return colorMap['green'];
-            if(c === 'fuchsia' || c === 'violet' || c === 'indigo') return colorMap['purple'];
+            
+            // Map specific colors that might fall through or match existing keys
+            if(c === 'emerald' || c === 'teal') return colorMap[c];
+            if(c === 'fuchsia' || c === 'violet' || c === 'indigo' || c === 'rose' || c === 'sky' || c === 'lime' || c === 'amber' || c === 'cyan' || c === 'pink' || c === 'slate') return colorMap[c];
+            
             return colorMap[c] || colorMap['gray'];
         }
 
@@ -1855,14 +1875,12 @@
 
         function closeLevelUp() { document.getElementById('level-up-modal').classList.add('hidden'); }
         
-        // --- PROFILE MODAL LOGIC ---
         window.closeProfileModal = () => document.getElementById('profile-modal').classList.add('hidden');
         
         window.openProfileModal = () => {
             const modal = document.getElementById('profile-modal');
             if(!modal) return;
             
-            // Populate basic info
             const user = window.auth.currentUser;
             if(user) {
                 document.getElementById('profile-name-display').innerText = user.displayName || 'Estudante';
@@ -1871,7 +1889,6 @@
                 document.getElementById('edit-profile-email').value = user.email || '';
             }
 
-            // Populate Timeline in Journey Tab
             const level = parseInt(document.getElementById('level-circle').innerText) || 1;
             const container = document.getElementById('profile-next-levels');
             let html = '';
@@ -1891,7 +1908,6 @@
         }
 
         window.switchProfileTab = (tab) => {
-            // Update Headers
             ['personal', 'security', 'journey'].forEach(t => {
                 document.getElementById(`tab-btn-${t}`).classList.remove('active');
                 document.getElementById(`tab-content-${t}`).classList.add('hidden');
@@ -1925,18 +1941,15 @@
             }
         }
 
-        // --- THEME LOGIC ---
         window.setTheme = (mode) => {
             localStorage.setItem('theme', mode);
             updateThemeDisplay(mode);
         }
 
         function updateThemeDisplay(mode) {
-            // Update UI buttons
             ['light', 'dark', 'system'].forEach(m => document.getElementById(`theme-btn-${m}`).classList.remove('active'));
             document.getElementById(`theme-btn-${mode}`).classList.add('active');
 
-            // Apply Theme
             if (mode === 'system') {
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     document.documentElement.classList.add('dark');
@@ -1950,7 +1963,6 @@
             }
         }
 
-        // System theme listener
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (localStorage.getItem('theme') === 'system') {
                 if (e.matches) document.documentElement.classList.add('dark');
@@ -1959,8 +1971,6 @@
         });
 
         window.toggleTheme = () => {
-            // Legacy toggle fallback if needed, mainly for mobile sidebar button not removed yet?
-            // Actually I replaced the desktop one, let's update toggleTheme to cycle modes or redirect
             const current = localStorage.getItem('theme') || 'system';
             const next = current === 'light' ? 'dark' : (current === 'dark' ? 'system' : 'light');
             setTheme(next);

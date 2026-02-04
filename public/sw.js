@@ -1,6 +1,6 @@
 // ARQUIVO: public/sw.js
 
-const CACHE_NAME = 'elite-ava-v1';
+const CACHE_NAME = 'elite-ava-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
